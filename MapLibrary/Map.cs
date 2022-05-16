@@ -4,54 +4,54 @@ namespace MapLibrary
 {
 	public class Map
 	{
-		private static Color GetHeatMapColor(double index = 0)
+		private static Color GetHeatMapColor(double heatMapIndex = 0)
 		{
 			Color rtnVal = Color.Gray;
-			if (index <= 6.449166)
+			if (heatMapIndex <= 6.449166)
 			{
 				rtnVal = ColorTranslator.FromHtml("#b8de34");
 			}
-			else if (index > 6.449166 && index <= 12.898332)
+			else if (heatMapIndex > 6.449166 && heatMapIndex <= 12.898332)
 			{
 				rtnVal = ColorTranslator.FromHtml("#bdff49");
 			}
-			else if (index > 12.898332 && index <= 19.347498)
+			else if (heatMapIndex > 12.898332 && heatMapIndex <= 19.347498)
 			{
 				rtnVal = ColorTranslator.FromHtml("#fff32c");
 			}
-			else if (index > 19.347498 && index <= 25.796664)
+			else if (heatMapIndex > 19.347498 && heatMapIndex <= 25.796664)
 			{
 				rtnVal = ColorTranslator.FromHtml("#ffff99");
 			}
-			else if (index > 25.796664 && index <= 32.245830)
+			else if (heatMapIndex > 25.796664 && heatMapIndex <= 32.245830)
 			{
 				rtnVal = ColorTranslator.FromHtml("#fff32c");
 			}
-			else if (index > 32.245830 && index <= 38.694996)
+			else if (heatMapIndex > 32.245830 && heatMapIndex <= 38.694996)
 			{
 				rtnVal = ColorTranslator.FromHtml("#eec713");
 			}
-			else if (index > 38.694996 && index <= 45.144162)
+			else if (heatMapIndex > 38.694996 && heatMapIndex <= 45.144162)
 			{
 				rtnVal = ColorTranslator.FromHtml("#ffb669");
 			}
-			else if (index > 45.144162 && index <= 51.593328)
+			else if (heatMapIndex > 45.144162 && heatMapIndex <= 51.593328)
 			{
 				rtnVal = ColorTranslator.FromHtml("#ff921e");
 			}
-			else if (index > 51.593328 && index <= 58.042494)
+			else if (heatMapIndex > 51.593328 && heatMapIndex <= 58.042494)
 			{
 				rtnVal = ColorTranslator.FromHtml("#ff6000");
 			}
-			else if (index > 58.042494 && index <= 64.491660)
+			else if (heatMapIndex > 58.042494 && heatMapIndex <= 64.491660)
 			{
 				rtnVal = ColorTranslator.FromHtml("#ff4242");
 			}
-			else if (index > 64.491660 && index <= 70.940826)
+			else if (heatMapIndex > 64.491660 && heatMapIndex <= 70.940826)
 			{
 				rtnVal = ColorTranslator.FromHtml("#f10000");
 			}
-			else if (index > 70.940826)
+			else if (heatMapIndex > 70.940826)
 			{
 				rtnVal = ColorTranslator.FromHtml("#a80000");
 			}
