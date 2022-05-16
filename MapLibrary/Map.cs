@@ -6,91 +6,52 @@ namespace MapLibrary
 	{
 		public static int Alpha => 70;
 
-		public static Color GetHeatMapColorBy(double heatMapIndex = 0)
+        private static Dictionary<double, string> ColorCodeLookUp = new Dictionary<double, string>
         {
-            Color rtnVal = Color.Gray;
+            { 6.449166, "#b8de34" },
+            { 12.898332, "#bdff49" },
+            { 19.347498, "#fff32c" },
+            { 25.796664, "#ffff99" },
+            { 32.245830, "#fff32c" },
+            { 38.694996, "#eec713" },
+            { 45.144162, "#ffb669" },
+            { 51.593328, "#ff921e" },
+            { 58.042494, "#ff6000" },
+            { 64.491660, "#ff4242" },
+            { 70.940826, "#f10000" },
+            {double.MaxValue, "#a80000" }
+        };
 
-            rtnVal = GetColorFromHtmlBy(heatMapIndex);
+        public static Color GetHeatMapColorBy(double heatMapIndex = 0)
+        {
+            var rtnVal = GetColorFromHtmlBy(heatMapIndex);
 
             return Color.FromArgb(Alpha, rtnVal.R, rtnVal.G, rtnVal.B);
         }
 
         private static Color GetColorFromHtmlBy(double heatMapIndex)
         {
-            Color rtnVal;
-            if (heatMapIndex.IsLessThan(6.449166))
+            var keys = ColorCodeLookUp.Keys;
+            var finalKey = heatMapIndex;
+            
+            foreach (var key in keys)
             {
-                rtnVal = ColorTranslator.FromHtml("#b8de34");
+                var IsInRange = finalKey.IsLessThanOrEqualToMaximum(key);
+
+                if (IsInRange)
+                {
+                    finalKey = key;
+                    break;
+                }
             }
-            else if (heatMapIndex.IsWithinInCludeMaximum(6.449166, 12.898332))
-            {
-                rtnVal = ColorTranslator.FromHtml("#bdff49");
-            }
-            else if (heatMapIndex.IsWithinInCludeMaximum(12.898332, 19.347498))
-            {
-                rtnVal = ColorTranslator.FromHtml("#fff32c");
-            }
-            else if (heatMapIndex.IsWithinInCludeMaximum(19.347498, 25.796664))
-            {
-                rtnVal = ColorTranslator.FromHtml("#ffff99");
-            }
-            else if (heatMapIndex.IsWithinInCludeMaximum(25.796664, 32.245830))
-            {
-                rtnVal = ColorTranslator.FromHtml("#fff32c");
-            }
-            else if (heatMapIndex.IsWithinInCludeMaximum(32.245830, 38.694996))
-            {
-                rtnVal = ColorTranslator.FromHtml("#eec713");
-            }
-            else if (heatMapIndex.IsWithinInCludeMaximum(38.694996, 45.144162))
-            {
-                rtnVal = ColorTranslator.FromHtml("#ffb669");
-            }
-            else if (heatMapIndex.IsWithinInCludeMaximum(45.144162, 51.593328))
-            {
-                rtnVal = ColorTranslator.FromHtml("#ff921e");
-            }
-            else if (heatMapIndex.IsWithinInCludeMaximum(51.593328, 58.042494))
-            {
-                rtnVal = ColorTranslator.FromHtml("#ff6000");
-            }
-            else if (heatMapIndex.IsWithinInCludeMaximum(58.042494, 64.491660))
-            {
-                rtnVal = ColorTranslator.FromHtml("#ff4242");
-            }
-            else if (heatMapIndex.IsWithinInCludeMaximum(64.491660, 70.940826))
-            {
-                rtnVal = ColorTranslator.FromHtml("#f10000");
-            }
-            else if (heatMapIndex.IsGreaterThan(70.940826))
-            {
-                rtnVal = ColorTranslator.FromHtml("#a80000");
-            }
-            else
-            {
-                rtnVal = ColorTranslator.FromHtml("#b8de34");
-            }
+
+            if(!ColorCodeLookUp.ContainsKey(finalKey)) return Color.Gray;
+
+            var colorCode =  ColorCodeLookUp[finalKey];
+            Color rtnVal = ColorTranslator.FromHtml(colorCode);
 
             return rtnVal;
         }
 
-    }
-
-	public static class CommonHelper
-    {
-        public static bool IsWithinInCludeMaximum(this double number, double minimum, double maximum)
-        {
-            return number > minimum && number <= maximum;
-        }
-
-        public static bool IsGreaterThan(this double number, double otherNumber)
-        {
-			return number > otherNumber;
-        }
-
-        public static bool IsLessThan(this double number, double otherNumber)
-        {
-            return number < otherNumber;
-        }
     }
 }
