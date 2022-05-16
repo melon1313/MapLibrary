@@ -6,20 +6,20 @@ namespace MapLibrary
 	{
 		public static int Alpha => 70;
 
-        private static Dictionary<double, string> ColorCodeLookUp = new Dictionary<double, string>
+        private static Dictionary<double, Color> ColorCodeLookUp = new Dictionary<double, Color>
         {
-            { 6.449166, "#b8de34" },
-            { 12.898332, "#bdff49" },
-            { 19.347498, "#fff32c" },
-            { 25.796664, "#ffff99" },
-            { 32.245830, "#fff32c" },
-            { 38.694996, "#eec713" },
-            { 45.144162, "#ffb669" },
-            { 51.593328, "#ff921e" },
-            { 58.042494, "#ff6000" },
-            { 64.491660, "#ff4242" },
-            { 70.940826, "#f10000" },
-            {double.MaxValue, "#a80000" }
+            { 6.449166, ColorTranslator.FromHtml("#b8de34") },
+            { 12.898332, ColorTranslator.FromHtml("#bdff49") },
+            { 19.347498, ColorTranslator.FromHtml("#fff32c") },
+            { 25.796664, ColorTranslator.FromHtml("#ffff99") },
+            { 32.245830, ColorTranslator.FromHtml("#fff32c") },
+            { 38.694996, ColorTranslator.FromHtml("#eec713") },
+            { 45.144162, ColorTranslator.FromHtml("#ffb669") },
+            { 51.593328, ColorTranslator.FromHtml("#ff921e") },
+            { 58.042494, ColorTranslator.FromHtml("#ff6000") },
+            { 64.491660, ColorTranslator.FromHtml("#ff4242") },
+            { 70.940826, ColorTranslator.FromHtml("#f10000") },
+            { double.MaxValue, ColorTranslator.FromHtml("#a80000") }
         };
 
         public static Color GetHeatMapColorBy(double heatMapIndex = 0)
@@ -31,21 +31,7 @@ namespace MapLibrary
 
         private static Color GetColorFromHtmlBy(double heatMapIndex)
         {
-
-            GetKeyFromColorLookUpBy(heatMapIndex, out var key);
-
-            if (!ColorCodeLookUp.ContainsKey(key)) return Color.Gray;
-
-            var colorCode = ColorCodeLookUp[key];
-            var rtnVal = ColorTranslator.FromHtml(colorCode);
-
-            return rtnVal;
-        }
-
-        private static double GetKeyFromColorLookUpBy(double heatMapIndex, out double finalKey)
-        {
             var keys = ColorCodeLookUp.Keys;
-            finalKey = heatMapIndex;
 
             foreach (var key in keys)
             {
@@ -53,12 +39,11 @@ namespace MapLibrary
 
                 if (IsInRange)
                 {
-                    finalKey = key;
-                    break;
+                    return ColorCodeLookUp[key];
                 }
             }
 
-            return finalKey;
+            return Color.Gray;
         }
     }
 }
