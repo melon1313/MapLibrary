@@ -31,12 +31,25 @@ namespace MapLibrary
 
         private static Color GetColorFromHtmlBy(double heatMapIndex)
         {
+
+            GetKeyFromColorLookUpBy(heatMapIndex, out var key);
+
+            if (!ColorCodeLookUp.ContainsKey(key)) return Color.Gray;
+
+            var colorCode = ColorCodeLookUp[key];
+            var rtnVal = ColorTranslator.FromHtml(colorCode);
+
+            return rtnVal;
+        }
+
+        private static double GetKeyFromColorLookUpBy(double heatMapIndex, out double finalKey)
+        {
             var keys = ColorCodeLookUp.Keys;
-            var finalKey = heatMapIndex;
-            
+            finalKey = heatMapIndex;
+
             foreach (var key in keys)
             {
-                var IsInRange = finalKey.IsLessThanOrEqualToMaximum(key);
+                var IsInRange = heatMapIndex.IsLessThanOrEqualToMaximum(key);
 
                 if (IsInRange)
                 {
@@ -45,13 +58,7 @@ namespace MapLibrary
                 }
             }
 
-            if(!ColorCodeLookUp.ContainsKey(finalKey)) return Color.Gray;
-
-            var colorCode =  ColorCodeLookUp[finalKey];
-            Color rtnVal = ColorTranslator.FromHtml(colorCode);
-
-            return rtnVal;
+            return finalKey;
         }
-
     }
 }
